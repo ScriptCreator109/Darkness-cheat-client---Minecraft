@@ -1,0 +1,57 @@
+plugins {
+    id 'eclipse'
+    id 'net.minecraftforge.gradle' version '5.+' 
+    id 'org.spongepowered.mixin' version '0.7.+'
+}
+
+version = "${mod_version}"
+group = "${mod_group_id}"
+archivesBaseName = "${mod_id}"
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+minecraft {
+    mappings channel: "${mapping_channel}", version: "${mapping_version}"
+    
+    runs {
+        client {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            mods {
+                "${mod_id}" {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+repositories {
+    maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
+}
+
+dependencies {
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+}
+
+mixin {
+    add sourceSets.main, "${mod_id}.refmap.json"
+    config "${mod_id}.mixins.json"
+}
+
+jar {
+    manifest {
+        attributes([
+            "Specification-Title"     : "${mod_id}",
+            "Specification-Vendor"    : "${mod_authors}",
+            "Specification-Version"   : "1",
+            "Implementation-Title"    : project.name,
+            "Implementation-Version"  : "${mod_version}",
+            "Implementation-Vendor"   : "${mod_authors}",
+        ])
+    }
+}
