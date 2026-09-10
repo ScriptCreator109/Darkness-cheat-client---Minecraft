@@ -1,0 +1,25 @@
+modLoader="javafml"
+loaderVersion="[43,)"
+license="All Rights Reserved"
+
+[[mods]]
+modId="darkness"
+version="1.0.0"
+displayName="Darkness Client"
+description='''
+Cheat client para Forge 1.19.2, feito no telemóvel.
+'''
+
+[[dependencies.darkness]]
+    modId="forge"
+    mandatory=true
+    versionRange="[43,)"
+    ordering="NONE"
+    side="CLIENT"
+
+[[dependencies.darkness]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.19.2,1.20)"
+    ordering="NONE"
+    side="CLIENT"
