@@ -1,0 +1,32 @@
+name: Build Mod
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+      
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      
+      - name: Dar permissão ao gradlew
+        run: chmod +x gradlew
+      
+      - name: Compilar com Gradle
+        run: ./gradlew build
+      
+      - name: Upload do .jar
+        uses: actions/upload-artifact@v4
+        with:
+          name: darkness-jar
+          path: build/libs/*.jar
